@@ -203,8 +203,11 @@ class Fingerprint : DrawingArea {
         double cx = get_allocated_width () / 2.0;
         double cy = get_allocated_height () / 2.0 + 5;
         double scale = int.min (get_allocated_width (), get_allocated_height ()) / 110.0;
-        Gdk.RGBA color = get_style_context ().get_color (get_state_flags ());
-        if (success) {
+        Gdk.RGBA color;
+        if (!get_style_context ().lookup_color ("theme_fg_color", out color)) {
+            color = get_style_context ().get_color (get_state_flags ());
+        }
+        if (success && !get_style_context ().lookup_color ("theme_selected_bg_color", out color)) {
             color = Gdk.RGBA ();
             color.parse ("#2e8b3c");
         }
