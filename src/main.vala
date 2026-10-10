@@ -14,6 +14,9 @@ struct FingerInfo {
 }
 
 class FprintClient : Object {
+    // Calls that may show a polkit password prompt must wait for the user.
+    private const int AUTH_TIMEOUT = int.MAX;
+
     private DBusProxy? manager;
     private DBusProxy? device;
     private ulong signal_id;
@@ -59,8 +62,8 @@ class FprintClient : Object {
             device.call_sync (
                 "Claim",
                 new Variant ("(s)", Environment.get_user_name ()),
-                DBusCallFlags.NONE,
-                5000,
+                DBusCallFlags.ALLOW_INTERACTIVE_AUTHORIZATION,
+                AUTH_TIMEOUT,
                 null
             );
             claimed = true;
@@ -123,8 +126,8 @@ class FprintClient : Object {
             device.call_sync (
                 "EnrollStart",
                 new Variant ("(s)", finger),
-                DBusCallFlags.NONE,
-                5000,
+                DBusCallFlags.ALLOW_INTERACTIVE_AUTHORIZATION,
+                AUTH_TIMEOUT,
                 null
             );
         } catch (Error error) {
@@ -152,8 +155,8 @@ class FprintClient : Object {
         device.call_sync (
             "DeleteEnrolledFinger",
             new Variant ("(s)", finger),
-            DBusCallFlags.NONE,
-            5000,
+            DBusCallFlags.ALLOW_INTERACTIVE_AUTHORIZATION,
+            AUTH_TIMEOUT,
             null
         );
     }
