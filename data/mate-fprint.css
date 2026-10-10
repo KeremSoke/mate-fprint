@@ -1,0 +1,21 @@
+.finger-button {
+  padding: 10px 6px;
+}
+
+.finger-button:hover {
+  background-color: alpha(@theme_selected_bg_color, 0.10);
+}
+
+.enroll-instruction {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+progressbar trough {
+  min-height: 8px;
+}
+
+progressbar progress {
+  min-height: 8px;
+}
+

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Fingerprint Login
+Comment=Register fingerprints for authentication
+Exec=mate-fprint
+Icon=auth-fingerprint-symbolic
+Terminal=false
+Type=Application
+Categories=GTK;Settings;HardwareSettings;Security;
+Keywords=fingerprint;login;authentication;security;
+StartupNotify=true
