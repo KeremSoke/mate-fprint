@@ -1,6 +1,6 @@
 # MATE Fingerprint Login
 
-A traditional Vala and GTK 3 fingerprint utility for the MATE desktop. It talks directly to fprintd over D-Bus and does not use XApps or client-side decorations.
+A traditional Vala and GTK 3 fingerprint utility for the MATE desktop. It talks directly to fprintd over D-Bus.
 
 ## Requirements
 
@@ -24,11 +24,3 @@ MATE_FPRINT_DEMO=1 ./build/mate-fprint
 ```
 
 Install with `meson install -C build`. The application can enable or disable its PAM profile through PolicyKit and `pam-auth-update`.
-
-## Design
-
-The finger grid and focused scan workflow follow the interaction model used by Linux Mint's Fingwit, while the application uses only GTK 3 and standard server-side window decorations for a native MATE appearance.
-
-## License
-
-GPL-3.0-or-later
