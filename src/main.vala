@@ -2,6 +2,7 @@ using Gtk;
 using GLib;
 
 const string APP_ID = "org.mate.fprint";
+const string TITLE_MARKUP = "<span size=\"x-large\" weight=\"bold\">%s</span>";
 
 struct FingerInfo {
     public string id;
@@ -51,7 +52,7 @@ class FprintClient : Object {
             null
         );
         Variant? name = device.get_cached_property ("name");
-        return name != null ? name.get_string () : "Fingerprint reader";
+        return name != null ? name.get_string () : _("Fingerprint reader");
     }
 
     public void claim () throws Error {
@@ -250,20 +251,20 @@ class MainWindow : ApplicationWindow {
     private bool demo;
 
     private FingerInfo[] fingers = {
-        FingerInfo ("left-thumb", "Left thumb"),
-        FingerInfo ("left-index-finger", "Left index"),
-        FingerInfo ("left-middle-finger", "Left middle"),
-        FingerInfo ("left-ring-finger", "Left ring"),
-        FingerInfo ("left-little-finger", "Left little"),
-        FingerInfo ("right-thumb", "Right thumb"),
-        FingerInfo ("right-index-finger", "Right index"),
-        FingerInfo ("right-middle-finger", "Right middle"),
-        FingerInfo ("right-ring-finger", "Right ring"),
-        FingerInfo ("right-little-finger", "Right little")
+        FingerInfo ("left-thumb", _("Left thumb")),
+        FingerInfo ("left-index-finger", _("Left index")),
+        FingerInfo ("left-middle-finger", _("Left middle")),
+        FingerInfo ("left-ring-finger", _("Left ring")),
+        FingerInfo ("left-little-finger", _("Left little")),
+        FingerInfo ("right-thumb", _("Right thumb")),
+        FingerInfo ("right-index-finger", _("Right index")),
+        FingerInfo ("right-middle-finger", _("Right middle")),
+        FingerInfo ("right-ring-finger", _("Right ring")),
+        FingerInfo ("right-little-finger", _("Right little"))
     };
 
     public MainWindow (Gtk.Application application) {
-        Object (application: application, title: "Fingerprint Login");
+        Object (application: application, title: _("Fingerprint Login"));
         set_default_size (760, 540);
         set_size_request (660, 480);
         set_position (WindowPosition.CENTER);
@@ -323,13 +324,13 @@ class MainWindow : ApplicationWindow {
         var bar = new MenuBar ();
         var accelerators = new AccelGroup ();
         add_accel_group (accelerators);
-        var fingerprint_item = new Gtk.MenuItem.with_mnemonic ("_Fingerprint");
+        var fingerprint_item = new Gtk.MenuItem.with_mnemonic (_("_Fingerprint"));
         var fingerprint_menu = new Gtk.Menu ();
-        var refresh_item = new Gtk.MenuItem.with_mnemonic ("_Refresh");
+        var refresh_item = new Gtk.MenuItem.with_mnemonic (_("_Refresh"));
         refresh_item.activate.connect (refresh);
-        disable_item = new Gtk.MenuItem.with_mnemonic ("_Disable Fingerprint Authentication");
+        disable_item = new Gtk.MenuItem.with_mnemonic (_("_Disable Fingerprint Authentication"));
         disable_item.activate.connect (() => set_authentication (false));
-        var quit_item = new Gtk.MenuItem.with_mnemonic ("_Quit");
+        var quit_item = new Gtk.MenuItem.with_mnemonic (_("_Quit"));
         quit_item.activate.connect (() => application.quit ());
         add_menu_accelerator (quit_item, accelerators, "<Control>Q");
         add_menu_accelerator (quit_item, accelerators, "<Control>W");
@@ -338,9 +339,9 @@ class MainWindow : ApplicationWindow {
         fingerprint_menu.append (new SeparatorMenuItem ());
         fingerprint_menu.append (quit_item);
         fingerprint_item.set_submenu (fingerprint_menu);
-        var help_item = new Gtk.MenuItem.with_mnemonic ("_Help");
+        var help_item = new Gtk.MenuItem.with_mnemonic (_("_Help"));
         var help_menu = new Gtk.Menu ();
-        var about_item = new Gtk.MenuItem.with_mnemonic ("_About");
+        var about_item = new Gtk.MenuItem.with_mnemonic (_("_About"));
         about_item.activate.connect (show_about);
         add_menu_accelerator (about_item, accelerators, "F1");
         help_menu.append (about_item);
@@ -370,7 +371,7 @@ class MainWindow : ApplicationWindow {
         spinner.set_size_request (32, 32);
         spinner.start ();
         box.pack_start (spinner, false, false, 8);
-        box.pack_start (new Label ("Looking for a fingerprint reader…"), false, false, 8);
+        box.pack_start (new Label (_("Looking for a fingerprint reader…")), false, false, 8);
         stack.add_named (box, "loading");
     }
 
@@ -378,11 +379,11 @@ class MainWindow : ApplicationWindow {
         var box = centered_box ();
         box.pack_start (new Image.from_icon_name ("dialog-warning", IconSize.DIALOG), false, false, 6);
         var title = new Label (null);
-        title.set_markup ("<span size=\"x-large\" weight=\"bold\">No fingerprint reader detected</span>");
-        var detail = new Label ("Connect a supported reader, then try again.\nThe fprintd service must also be installed and running.");
+        title.set_markup (TITLE_MARKUP.printf (Markup.escape_text (_("No fingerprint reader detected"))));
+        var detail = new Label (_("Connect a supported reader, then try again.\nThe fprintd service must also be installed and running."));
         detail.justify = Justification.CENTER;
         detail.get_style_context ().add_class ("dim-label");
-        var retry = new Button.with_mnemonic ("_Try Again");
+        var retry = new Button.with_mnemonic (_("_Try Again"));
         retry.halign = Align.CENTER;
         retry.clicked.connect (refresh);
         box.pack_start (title, false, false, 6);
@@ -395,11 +396,11 @@ class MainWindow : ApplicationWindow {
         var box = centered_box ();
         var print = new Fingerprint (100);
         var title = new Label (null);
-        title.set_markup ("<span size=\"x-large\" weight=\"bold\">Fingerprint authentication is disabled</span>");
-        var detail = new Label ("Enable fingerprint authentication for login, screen unlocking,\nand administrative actions.");
+        title.set_markup (TITLE_MARKUP.printf (Markup.escape_text (_("Fingerprint authentication is disabled"))));
+        var detail = new Label (_("Enable fingerprint authentication for login, screen unlocking,\nand administrative actions."));
         detail.justify = Justification.CENTER;
         detail.get_style_context ().add_class ("dim-label");
-        var enable = new Button.with_mnemonic ("_Enable Fingerprint Authentication");
+        var enable = new Button.with_mnemonic (_("_Enable Fingerprint Authentication"));
         enable.get_style_context ().add_class ("suggested-action");
         enable.halign = Align.CENTER;
         enable.clicked.connect (() => set_authentication (true));
@@ -418,9 +419,9 @@ class MainWindow : ApplicationWindow {
         icon.set_progress (1.0);
         var heading_text = new Box (Orientation.VERTICAL, 2);
         var title = new Label (null);
-        title.set_markup ("<span size=\"x-large\" weight=\"bold\">Fingerprint Login</span>");
+        title.set_markup (TITLE_MARKUP.printf (Markup.escape_text (_("Fingerprint Login"))));
         title.halign = Align.START;
-        device_label = new Label ("Fingerprint reader");
+        device_label = new Label (_("Fingerprint reader"));
         device_label.halign = Align.START;
         device_label.get_style_context ().add_class ("dim-label");
         heading_text.pack_start (title, false, false, 0);
@@ -428,7 +429,7 @@ class MainWindow : ApplicationWindow {
         heading.pack_start (icon, false, false, 0);
         heading.pack_start (heading_text, true, true, 0);
         page.pack_start (heading, false, false, 0);
-        var frame = new Frame ("Registered fingerprints");
+        var frame = new Frame (_("Registered fingerprints"));
         finger_grid = new Grid ();
         finger_grid.column_spacing = 6;
         finger_grid.row_spacing = 6;
@@ -436,7 +437,7 @@ class MainWindow : ApplicationWindow {
         finger_grid.column_homogeneous = true;
         frame.add (finger_grid);
         page.pack_start (frame, true, true, 0);
-        var hint = new Label ("Select a finger to register, replace, or remove it.");
+        var hint = new Label (_("Select a finger to register, replace, or remove it."));
         hint.halign = Align.START;
         hint.get_style_context ().add_class ("dim-label");
         page.pack_start (hint, false, false, 0);
@@ -450,7 +451,7 @@ class MainWindow : ApplicationWindow {
         var print = new Fingerprint (56);
         print.set_progress (is_enrolled ? 1.0 : 0.0, is_enrolled);
         var name = new Label (finger.label);
-        var status = new Label (is_enrolled ? "Registered" : "Not registered");
+        var status = new Label (is_enrolled ? _("Registered") : _("Not registered"));
         status.get_style_context ().add_class ("dim-label");
         box.pack_start (print, false, false, 0);
         box.pack_start (name, false, false, 0);
@@ -479,10 +480,10 @@ class MainWindow : ApplicationWindow {
         var actions = new ButtonBox (Orientation.HORIZONTAL);
         actions.layout_style = ButtonBoxStyle.END;
         actions.spacing = 8;
-        remove_button = new Button.with_mnemonic ("_Remove");
+        remove_button = new Button.with_mnemonic (_("_Remove"));
         remove_button.get_style_context ().add_class ("destructive-action");
         remove_button.clicked.connect (remove_current);
-        enroll_button = new Button.with_mnemonic ("_Register");
+        enroll_button = new Button.with_mnemonic (_("_Register"));
         enroll_button.get_style_context ().add_class ("suggested-action");
         enroll_button.clicked.connect (begin_enrollment);
         actions.add (remove_button);
@@ -498,9 +499,9 @@ class MainWindow : ApplicationWindow {
         page.pack_start (enroll_title, false, false, 6);
         var center = centered_box ();
         enroll_print = new Fingerprint (170);
-        enroll_instruction = new Label ("Place your finger on the reader");
+        enroll_instruction = new Label (_("Place your finger on the reader"));
         enroll_instruction.get_style_context ().add_class ("enroll-instruction");
-        enroll_status = new Label ("Lift and place the same finger again after each scan.");
+        enroll_status = new Label (_("Lift and place the same finger again after each scan."));
         enroll_status.justify = Justification.CENTER;
         enroll_status.get_style_context ().add_class ("dim-label");
         progress_bar = new ProgressBar ();
@@ -510,7 +511,7 @@ class MainWindow : ApplicationWindow {
         center.pack_start (enroll_status, false, false, 0);
         center.pack_start (progress_bar, false, false, 10);
         page.pack_start (center, true, true, 0);
-        cancel_button = new Button.with_mnemonic ("_Cancel");
+        cancel_button = new Button.with_mnemonic (_("_Cancel"));
         cancel_button.halign = Align.END;
         cancel_button.clicked.connect (cancel_enrollment);
         page.pack_start (cancel_button, false, false, 0);
@@ -537,15 +538,15 @@ class MainWindow : ApplicationWindow {
             process.wait_check_async.begin (null, (object, result) => {
                 try {
                     if (!process.wait_check_async.end (result)) {
-                        show_error ("Could not change fingerprint authentication", "The system configuration command failed.");
+                        show_error (_("Could not change fingerprint authentication"), _("The system configuration command failed."));
                     }
                     refresh ();
                 } catch (Error error) {
-                    show_error ("Could not change fingerprint authentication", error.message);
+                    show_error (_("Could not change fingerprint authentication"), error.message);
                 }
             });
         } catch (Error error) {
-            show_error ("Could not change fingerprint authentication", error.message);
+            show_error (_("Could not change fingerprint authentication"), error.message);
         }
     }
 
@@ -557,7 +558,7 @@ class MainWindow : ApplicationWindow {
         try {
             string name;
             if (demo) {
-                name = "Demo fingerprint reader";
+                name = _("Demo fingerprint reader");
                 enrolled.remove_all ();
                 enrolled.insert ("left-index-finger", "left-index-finger");
                 enrolled.insert ("right-index-finger", "right-index-finger");
@@ -605,12 +606,12 @@ class MainWindow : ApplicationWindow {
     private void select_finger (FingerInfo finger, bool is_enrolled) {
         current_finger = finger.id;
         current_label = finger.label;
-        detail_title.set_markup ("<span size=\"x-large\" weight=\"bold\">%s</span>".printf (Markup.escape_text (finger.label)));
+        detail_title.set_markup (TITLE_MARKUP.printf (Markup.escape_text (finger.label)));
         detail_print.set_progress (is_enrolled ? 1.0 : 0.0, is_enrolled);
-        detail_status.label = is_enrolled ? "This fingerprint is registered." : "This fingerprint is not registered.";
+        detail_status.label = is_enrolled ? _("This fingerprint is registered.") : _("This fingerprint is not registered.");
         remove_button.visible = is_enrolled;
         enroll_button.visible = !is_enrolled;
-        enroll_button.label = "_Register";
+        enroll_button.label = _("_Register");
         enroll_button.use_underline = true;
         stack.visible_child_name = "detail";
     }
@@ -618,13 +619,14 @@ class MainWindow : ApplicationWindow {
     private void begin_enrollment () {
         scans = 0;
         stages = demo ? 5 : client.get_enroll_stages ();
-        enroll_title.set_markup ("<span size=\"x-large\" weight=\"bold\">Register %s</span>".printf (Markup.escape_text (current_label.down ())));
-        enroll_instruction.label = "Place your finger on the reader";
-        enroll_status.label = "Lift and place the same finger again after each scan.";
+        // Translators: %s is a finger name in lowercase, such as "left index".
+        enroll_title.set_markup (TITLE_MARKUP.printf (Markup.escape_text (_("Register %s").printf (current_label.down ()))));
+        enroll_instruction.label = _("Place your finger on the reader");
+        enroll_status.label = _("Lift and place the same finger again after each scan.");
         progress_bar.fraction = 0;
         progress_bar.show_text = false;
         enroll_print.set_progress (0);
-        cancel_button.label = "_Cancel";
+        cancel_button.label = _("_Cancel");
         cancel_button.use_underline = true;
         stack.visible_child_name = "enroll";
         if (demo) {
@@ -634,7 +636,7 @@ class MainWindow : ApplicationWindow {
         try {
             client.start_enrollment (current_finger, enroll_signal);
         } catch (Error error) {
-            show_error ("Could not start enrollment", error.message);
+            show_error (_("Could not start enrollment"), error.message);
             stack.visible_child_name = "detail";
         }
     }
@@ -656,62 +658,63 @@ class MainWindow : ApplicationWindow {
             scans = int.min (stages, scans + 1);
             double fraction = (double) scans / stages;
             progress_bar.fraction = fraction;
-            progress_bar.text = "%d of %d scans".printf (scans, stages);
+            // Translators: the first %d is the number of completed scans, the second the total.
+            progress_bar.text = ngettext ("%d of %d scan", "%d of %d scans", stages).printf (scans, stages);
             progress_bar.show_text = true;
             enroll_print.set_progress (fraction);
-            enroll_instruction.label = "Good scan! Keep going.";
-            enroll_status.label = "Lift your finger, then place it on the reader again.";
+            enroll_instruction.label = _("Good scan! Keep going.");
+            enroll_status.label = _("Lift your finger, then place it on the reader again.");
             return;
         }
         if (status == "enroll-completed") {
             enrolled.insert (current_finger, current_finger);
             progress_bar.fraction = 1;
-            progress_bar.text = "Complete";
+            progress_bar.text = _("Complete");
             progress_bar.show_text = true;
             enroll_print.set_progress (1, true);
-            enroll_instruction.label = "Fingerprint registered";
-            enroll_status.label = "You can now use this finger to authenticate.";
-            cancel_button.label = "_Done";
+            enroll_instruction.label = _("Fingerprint registered");
+            enroll_status.label = _("You can now use this finger to authenticate.");
+            cancel_button.label = _("_Done");
             cancel_button.use_underline = true;
             stop_enrollment_safely ();
             return;
         }
         switch (status) {
             case "enroll-remove-and-retry":
-                enroll_instruction.label = "Try that scan again";
-                enroll_status.label = "Remove your finger completely, then place it on the reader.";
+                enroll_instruction.label = _("Try that scan again");
+                enroll_status.label = _("Remove your finger completely, then place it on the reader.");
                 break;
             case "enroll-retry-scan":
-                enroll_instruction.label = "Try that scan again";
-                enroll_status.label = "Move your finger slightly and try again.";
+                enroll_instruction.label = _("Try that scan again");
+                enroll_status.label = _("Move your finger slightly and try again.");
                 break;
             case "enroll-swipe-too-short":
-                enroll_instruction.label = "The swipe was too short";
-                enroll_status.label = "Swipe the full length of your finger over the reader.";
+                enroll_instruction.label = _("The swipe was too short");
+                enroll_status.label = _("Swipe the full length of your finger over the reader.");
                 break;
             case "enroll-finger-not-centered":
-                enroll_instruction.label = "Center your finger";
-                enroll_status.label = "Place the middle of your fingertip on the reader.";
+                enroll_instruction.label = _("Center your finger");
+                enroll_status.label = _("Place the middle of your fingertip on the reader.");
                 break;
             case "enroll-duplicate":
-                enroll_instruction.label = "Fingerprint already registered";
-                enroll_status.label = "Choose a different finger or remove the existing fingerprint first.";
+                enroll_instruction.label = _("Fingerprint already registered");
+                enroll_status.label = _("Choose a different finger or remove the existing fingerprint first.");
                 break;
             case "enroll-data-full":
-                enroll_instruction.label = "Fingerprint storage is full";
-                enroll_status.label = "Remove a fingerprint before registering another one.";
+                enroll_instruction.label = _("Fingerprint storage is full");
+                enroll_status.label = _("Remove a fingerprint before registering another one.");
                 break;
             case "enroll-disconnected":
-                enroll_instruction.label = "Reader disconnected";
-                enroll_status.label = "Reconnect the fingerprint reader and try again.";
+                enroll_instruction.label = _("Reader disconnected");
+                enroll_status.label = _("Reconnect the fingerprint reader and try again.");
                 break;
             default:
-                enroll_instruction.label = "Fingerprint was not registered";
-                enroll_status.label = "Please cancel and try again.";
+                enroll_instruction.label = _("Fingerprint was not registered");
+                enroll_status.label = _("Please cancel and try again.");
                 break;
         }
         if (done || status == "enroll-duplicate" || status == "enroll-data-full" || status == "enroll-disconnected" || status == "enroll-failed") {
-            cancel_button.label = "_Back";
+            cancel_button.label = _("_Back");
             cancel_button.use_underline = true;
             stop_enrollment_safely ();
         }
@@ -741,11 +744,12 @@ class MainWindow : ApplicationWindow {
             DialogFlags.MODAL,
             MessageType.QUESTION,
             ButtonsType.CANCEL,
-            "Remove %s?",
+            // Translators: %s is a finger name in lowercase, such as "left index".
+            _("Remove %s?"),
             current_label.down ()
         );
-        dialog.format_secondary_text ("You will no longer be able to authenticate with this fingerprint.");
-        var remove = dialog.add_button ("_Remove", ResponseType.ACCEPT);
+        dialog.format_secondary_text (_("You will no longer be able to authenticate with this fingerprint."));
+        var remove = dialog.add_button (_("_Remove"), ResponseType.ACCEPT);
         remove.get_style_context ().add_class ("destructive-action");
         int response = dialog.run ();
         dialog.destroy ();
@@ -759,7 +763,7 @@ class MainWindow : ApplicationWindow {
             enrolled.remove (current_finger);
             show_overview ();
         } catch (Error error) {
-            show_error ("Could not remove fingerprint", error.message);
+            show_error (_("Could not remove fingerprint"), error.message);
         }
     }
 
@@ -776,9 +780,9 @@ class MainWindow : ApplicationWindow {
         var dialog = new AboutDialog ();
         dialog.transient_for = this;
         dialog.modal = true;
-        dialog.program_name = "Fingerprint Login";
+        dialog.program_name = _("Fingerprint Login");
         dialog.version = Config.VERSION;
-        dialog.comments = "Manage fingerprint authentication for the MATE desktop";
+        dialog.comments = _("Manage fingerprint authentication for the MATE desktop");
         dialog.logo_icon_name = "auth-fingerprint-symbolic";
         dialog.license_type = License.GPL_3_0;
         dialog.run ();
@@ -802,5 +806,9 @@ class MateFprintApplication : Gtk.Application {
 }
 
 int main (string[] args) {
+    Intl.setlocale (LocaleCategory.ALL, "");
+    Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+    Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+    Intl.textdomain (Config.GETTEXT_PACKAGE);
     return new MateFprintApplication ().run (args);
 }

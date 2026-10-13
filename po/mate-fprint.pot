@@ -1,0 +1,324 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the mate-fprint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mate-fprint\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-12 17:40-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: data/org.mate.fprint.desktop.in:2 data/org.mate.fprint.metainfo.xml.in:4
+#: src/main.vala:267 src/main.vala:422 src/main.vala:783
+msgid "Fingerprint Login"
+msgstr ""
+
+#: data/org.mate.fprint.desktop.in:3
+msgid "Register fingerprints for authentication"
+msgstr ""
+
+#: data/org.mate.fprint.desktop.in:9
+msgid "fingerprint;login;authentication;security;"
+msgstr ""
+
+#: data/org.mate.fprint.metainfo.xml.in:5
+msgid "Manage fingerprint authentication in MATE"
+msgstr ""
+
+#: data/org.mate.fprint.metainfo.xml.in:9
+msgid "MATE Fingerprint contributors"
+msgstr ""
+
+#: data/org.mate.fprint.metainfo.xml.in:13
+msgid "Register and remove fingerprints for the MATE desktop."
+msgstr ""
+
+#: src/main.vala:55 src/main.vala:424
+msgid "Fingerprint reader"
+msgstr ""
+
+#: src/main.vala:254
+msgid "Left thumb"
+msgstr ""
+
+#: src/main.vala:255
+msgid "Left index"
+msgstr ""
+
+#: src/main.vala:256
+msgid "Left middle"
+msgstr ""
+
+#: src/main.vala:257
+msgid "Left ring"
+msgstr ""
+
+#: src/main.vala:258
+msgid "Left little"
+msgstr ""
+
+#: src/main.vala:259
+msgid "Right thumb"
+msgstr ""
+
+#: src/main.vala:260
+msgid "Right index"
+msgstr ""
+
+#: src/main.vala:261
+msgid "Right middle"
+msgstr ""
+
+#: src/main.vala:262
+msgid "Right ring"
+msgstr ""
+
+#: src/main.vala:263
+msgid "Right little"
+msgstr ""
+
+#: src/main.vala:327
+msgid "_Fingerprint"
+msgstr ""
+
+#: src/main.vala:329
+msgid "_Refresh"
+msgstr ""
+
+#: src/main.vala:331
+msgid "_Disable Fingerprint Authentication"
+msgstr ""
+
+#: src/main.vala:333
+msgid "_Quit"
+msgstr ""
+
+#: src/main.vala:342
+msgid "_Help"
+msgstr ""
+
+#: src/main.vala:344
+msgid "_About"
+msgstr ""
+
+#: src/main.vala:374
+msgid "Looking for a fingerprint reader…"
+msgstr ""
+
+#: src/main.vala:382
+msgid "No fingerprint reader detected"
+msgstr ""
+
+#: src/main.vala:383
+msgid ""
+"Connect a supported reader, then try again.\n"
+"The fprintd service must also be installed and running."
+msgstr ""
+
+#: src/main.vala:386
+msgid "_Try Again"
+msgstr ""
+
+#: src/main.vala:399
+msgid "Fingerprint authentication is disabled"
+msgstr ""
+
+#: src/main.vala:400
+msgid ""
+"Enable fingerprint authentication for login, screen unlocking,\n"
+"and administrative actions."
+msgstr ""
+
+#: src/main.vala:403
+msgid "_Enable Fingerprint Authentication"
+msgstr ""
+
+#: src/main.vala:432
+msgid "Registered fingerprints"
+msgstr ""
+
+#: src/main.vala:440
+msgid "Select a finger to register, replace, or remove it."
+msgstr ""
+
+#: src/main.vala:454
+msgid "Registered"
+msgstr ""
+
+#: src/main.vala:454
+msgid "Not registered"
+msgstr ""
+
+#: src/main.vala:483 src/main.vala:752
+msgid "_Remove"
+msgstr ""
+
+#: src/main.vala:486 src/main.vala:614
+msgid "_Register"
+msgstr ""
+
+#: src/main.vala:502 src/main.vala:624
+msgid "Place your finger on the reader"
+msgstr ""
+
+#: src/main.vala:504 src/main.vala:625
+msgid "Lift and place the same finger again after each scan."
+msgstr ""
+
+#: src/main.vala:514 src/main.vala:629
+msgid "_Cancel"
+msgstr ""
+
+#: src/main.vala:541 src/main.vala:545 src/main.vala:549
+msgid "Could not change fingerprint authentication"
+msgstr ""
+
+#: src/main.vala:541
+msgid "The system configuration command failed."
+msgstr ""
+
+#: src/main.vala:561
+msgid "Demo fingerprint reader"
+msgstr ""
+
+#: src/main.vala:611
+msgid "This fingerprint is registered."
+msgstr ""
+
+#: src/main.vala:611
+msgid "This fingerprint is not registered."
+msgstr ""
+
+#. Translators: %s is a finger name in lowercase, such as "left index".
+#: src/main.vala:623
+#, c-format
+msgid "Register %s"
+msgstr ""
+
+#: src/main.vala:639
+msgid "Could not start enrollment"
+msgstr ""
+
+#. Translators: the first %d is the number of completed scans, the second the total.
+#: src/main.vala:662
+#, c-format
+msgid "%d of %d scan"
+msgid_plural "%d of %d scans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/main.vala:665
+msgid "Good scan! Keep going."
+msgstr ""
+
+#: src/main.vala:666
+msgid "Lift your finger, then place it on the reader again."
+msgstr ""
+
+#: src/main.vala:672
+msgid "Complete"
+msgstr ""
+
+#: src/main.vala:675
+msgid "Fingerprint registered"
+msgstr ""
+
+#: src/main.vala:676
+msgid "You can now use this finger to authenticate."
+msgstr ""
+
+#: src/main.vala:677
+msgid "_Done"
+msgstr ""
+
+#: src/main.vala:684 src/main.vala:688
+msgid "Try that scan again"
+msgstr ""
+
+#: src/main.vala:685
+msgid "Remove your finger completely, then place it on the reader."
+msgstr ""
+
+#: src/main.vala:689
+msgid "Move your finger slightly and try again."
+msgstr ""
+
+#: src/main.vala:692
+msgid "The swipe was too short"
+msgstr ""
+
+#: src/main.vala:693
+msgid "Swipe the full length of your finger over the reader."
+msgstr ""
+
+#: src/main.vala:696
+msgid "Center your finger"
+msgstr ""
+
+#: src/main.vala:697
+msgid "Place the middle of your fingertip on the reader."
+msgstr ""
+
+#: src/main.vala:700
+msgid "Fingerprint already registered"
+msgstr ""
+
+#: src/main.vala:701
+msgid "Choose a different finger or remove the existing fingerprint first."
+msgstr ""
+
+#: src/main.vala:704
+msgid "Fingerprint storage is full"
+msgstr ""
+
+#: src/main.vala:705
+msgid "Remove a fingerprint before registering another one."
+msgstr ""
+
+#: src/main.vala:708
+msgid "Reader disconnected"
+msgstr ""
+
+#: src/main.vala:709
+msgid "Reconnect the fingerprint reader and try again."
+msgstr ""
+
+#: src/main.vala:712
+msgid "Fingerprint was not registered"
+msgstr ""
+
+#: src/main.vala:713
+msgid "Please cancel and try again."
+msgstr ""
+
+#: src/main.vala:717
+msgid "_Back"
+msgstr ""
+
+#. Translators: %s is a finger name in lowercase, such as "left index".
+#: src/main.vala:748
+#, c-format
+msgid "Remove %s?"
+msgstr ""
+
+#: src/main.vala:751
+msgid "You will no longer be able to authenticate with this fingerprint."
+msgstr ""
+
+#: src/main.vala:766
+msgid "Could not remove fingerprint"
+msgstr ""
+
+#: src/main.vala:785
+msgid "Manage fingerprint authentication for the MATE desktop"
+msgstr ""

@@ -1,0 +1,3 @@
+data/org.mate.fprint.desktop.in
+data/org.mate.fprint.metainfo.xml.in
+src/main.vala
